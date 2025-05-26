@@ -12,22 +12,24 @@ const adapter: SimpleAdapter = {
   version: 2,
   adapter: {
     [CHAIN.ZKSYNC]: {
-      fetch: fetchGRVTDex,
+      fetch: fetchGRVTFees,
       start: '2024-12-01',
     },
   },
 };
 
-export async function fetchGRVTDex(fetchOptions: FetchOptions) {
+export async function fetchGRVTFees(fetchOptions: FetchOptions) {
   const startOfDayUTC = getTimestampAtStartOfDayUTC(fetchOptions.startTimestamp);
   const endOfDayUTC = getTimestampAtStartOfNextDayUTC(fetchOptions.endTimestamp);
   const url = endpoint(startOfDayUTC,endOfDayUTC);
   const resp = await getGrvtData(url);
-  const dailyVolume = Number(resp.dailyVolume).toFixed(5);
+  const dailyFees = Number(resp.dailyFees).toFixed(5);
+  const dailyRevenue = Number(resp.dailyRevenue).toFixed(5);
 
   return {
     timestamp: startOfDayUTC,
-    dailyVolume,
+    dailyFees,
+    dailyRevenue
   };
 }
 
