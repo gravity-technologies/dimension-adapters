@@ -1,4 +1,4 @@
-import {FetchResult, SimpleAdapter} from "../../adapters/types";
+import {FetchOptions, FetchResult, SimpleAdapter} from "../../adapters/types";
 import fetchURL from "../../utils/fetchURL";
 import { CHAIN } from "../../helpers/chains";
 import { getTimestampAtStartOfNextDayUTC, getTimestampAtStartOfDayUTC } from "../../utils/date";
@@ -18,12 +18,9 @@ const adapter: SimpleAdapter = {
   },
 };
 
-export async function fetchGRVTDex(
-  startTimestamp: number,
-  endTimestamp: number,
-) {
-  const startOfDayUTC = getTimestampAtStartOfDayUTC(startTimestamp);
-  const endOfDayUTC = getTimestampAtStartOfNextDayUTC(endTimestamp);
+export async function fetchGRVTDex(fetchOptions: FetchOptions) {
+  const startOfDayUTC = getTimestampAtStartOfDayUTC(fetchOptions.startTimestamp);
+  const endOfDayUTC = getTimestampAtStartOfNextDayUTC(fetchOptions.endTimestamp);
   const url = endpoint(startOfDayUTC,endOfDayUTC);
   const resp = await getGrvtVolumeData(url);
   const dailyVolume = Number(resp.dailyVolume).toFixed(5);
