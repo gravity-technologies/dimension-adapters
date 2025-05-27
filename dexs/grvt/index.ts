@@ -5,7 +5,7 @@ import { getTimestampAtStartOfNextDayUTC, getTimestampAtStartOfDayUTC } from "..
 
 // endTime is in seconds
 const endpoint = (startTime: number, endTime: number) => {
-  return `https://grvt.io/statistics?start_timestamp=${startTime}&end_timestamp=${endTime}`;
+  return `https://openview.grvt.io/api/v1/defillama/stats?start_timestamp=${startTime}&end_timestamp=${endTime}`;
 };
 
 const adapter: SimpleAdapter = {
